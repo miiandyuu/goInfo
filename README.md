@@ -1,16 +1,21 @@
-# go_info
+# GOInfo
 
-A new Flutter project.
+Welcome to GOInfo! This app is designed to help you stay up-to-date with all the in-game events, news, and information related to Pokémon GO. Whether you're a seasoned Trainer or just starting your journey, this app has you covered.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Event Calendar:** Easily view upcoming and ongoing in-game events, including Community Days, Raid Hours, Special Research, and more.
 
-A few resources to get you started if this is your first Flutter project:
+- **Event Details:** Get detailed information about each event, such as event duration, featured Pokémon, rewards, and bonuses.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Event Countdown Timers:** Set reminders for upcoming events with built-in countdown timers.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Notifications:** Receive push notifications to remind you when events are about to start and when they're ending.
+
+## Screenshots
+
+Screenshots will be updated soon.
+
+---
+
+For more information, feel free to contact me at hergorilla11@gmail.com
