@@ -23,6 +23,11 @@ final _kEventSource = {
     kToday: [
       const Event('Today\'s Event 1'),
       const Event('Today\'s Event 2'),
+      const Event('Today\'s Event 3'),
+      const Event('Today\'s Event 4'),
+      const Event('Today\'s Event 5'),
+      const Event('Today\'s Event 6'),
+      const Event('Today\'s Event 7'),
     ]
   });
 

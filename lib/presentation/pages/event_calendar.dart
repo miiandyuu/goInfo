@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../utils.dart';
+import 'event_details.dart';
 
 class EventCalendar extends StatefulWidget {
   const EventCalendar({super.key});
@@ -19,6 +20,7 @@ class _EventCalendarState extends State<EventCalendar> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  int? _selectedEventIndex;
 
   @override
   void initState() {
@@ -53,6 +55,7 @@ class _EventCalendarState extends State<EventCalendar> {
         _rangeStart = null;
         _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
+        _selectedEventIndex = null;
       });
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
@@ -108,6 +111,7 @@ class _EventCalendarState extends State<EventCalendar> {
           ),
           const SizedBox(height: 12.0),
           Text.rich(
+            // TODO: Enhance UI and UX
             TextSpan(
                 text: 'Event on ',
                 style: const TextStyle(
@@ -131,20 +135,124 @@ class _EventCalendarState extends State<EventCalendar> {
               return ListView.builder(
                 itemCount: value.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12.0,
-                      vertical: 4.0,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: ListTile(
-                      // TODO: Change onTap to expand and navigate to event details page
-                      onTap: () => print('${value[index]}'),
-                      title: Text('${value[index]}'),
-                      key: ValueKey('listTile-${value[index]}'),
+                  bool isExpanded = index == _selectedEventIndex;
+                  //TODO: Make this into a widget
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      height: isExpanded ? 200.0 : 88.0,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2.0),
+                          borderRadius: BorderRadius.circular(12.0),
+                          image: DecorationImage(
+                              // TODO: Change this to a real image from data asset repository
+                              image: const AssetImage(
+                                  'assets/images/testEvent.webp'),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.4),
+                                  BlendMode.darken))),
+                      child: ListTile(
+                        title: SizedBox(
+                          height: 100.0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // TODO: Change this to a real event name from data asset repository
+                              Text(
+                                'EVENT NAME ${value[index]}',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 23.0,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(height: 4.0),
+                              // TODO: Change this to a real event details from data asset repository
+                              Text('$_selectedDay',
+                                  style: const TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                        // TODO: Better animation for the expansion, match the animation with the container
+                        subtitle: isExpanded
+                            ? Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        height: 56.0,
+                                        width: 56.0,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0)),
+                                        // TODO: Make this into a slideshow of the pokemon shiny and normal form
+                                        // TODO: Add notification message at the container either its a new pokemon or a new shiny
+                                        // TODO: Find a better background color for the container
+                                        child: Image.asset(
+                                            'assets/images/pokemon_icon_001_00.png',
+                                            scale: 2),
+                                      ),
+                                      const SizedBox(width: 8.0),
+                                      Container(
+                                        height: 56.0,
+                                        width: 56.0,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.white,
+                                                width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0)),
+                                        child: Image.asset(
+                                            'assets/images/pokemon_icon_004_00.png',
+                                            scale: 2),
+                                      ),
+                                      const SizedBox(width: 8.0),
+                                      Container(
+                                        height: 56.0,
+                                        width: 56.0,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.white,
+                                                width: 2.0),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0)),
+                                        child: Image.asset(
+                                            'assets/images/pokemon_icon_007_00.png',
+                                            scale: 2),
+                                      ),
+                                    ],
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EventDetails(),
+                                            ));
+                                      },
+                                      child: const Text('Details')),
+                                ],
+                              )
+                            : null,
+                        contentPadding: const EdgeInsets.all(16.0),
+                        onTap: () {
+                          setState(() {
+                            _selectedEventIndex = isExpanded ? null : index;
+                          });
+                        },
+                      ),
                     ),
                   );
                 },
